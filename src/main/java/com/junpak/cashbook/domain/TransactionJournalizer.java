@@ -24,7 +24,8 @@ public class TransactionJournalizer {
 		return new Journal(
 			transaction.getId(),
 			journalAccounts,
-			transaction.getAmount()
+			transaction.getAmount(),
+			transaction.getTransactionDate()
 		);
 	}
 
