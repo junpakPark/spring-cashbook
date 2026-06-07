@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import com.junpak.cashbook.domain.Money;
+import com.junpak.cashbook.domain.Price;
 
 @SuppressWarnings("NonAsciiCharacters")
 class TransactionTest {
 
 	private static final String DETAIL = "거래 내용";
-	private static final Money AMOUNT = Money.from(1_000);
+	private static final Price AMOUNT = Price.from(1_000);
 	private static final LocalDateTime TRANSACTION_DATE = LocalDateTime.of(2026, 6, 7, 16, 30);
 	private static final LocalDateTime CANCEL_DATE = LocalDateTime.of(2026, 6, 8, 11, 20);
 
