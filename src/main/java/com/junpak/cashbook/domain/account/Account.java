@@ -1,4 +1,4 @@
-package com.junpak.cashbook.domain.journal;
+package com.junpak.cashbook.domain.account;
 
 import lombok.Getter;
 

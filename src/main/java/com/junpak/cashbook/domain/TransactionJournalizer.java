@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
-import com.junpak.cashbook.domain.journal.Account;
+import com.junpak.cashbook.domain.account.Account;
 import com.junpak.cashbook.domain.journal.Journal;
 import com.junpak.cashbook.domain.journal.JournalAccounts;
 import com.junpak.cashbook.domain.transaction.PaymentMethod;

@@ -2,6 +2,8 @@ package com.junpak.cashbook.domain.journal;
 
 import java.util.Objects;
 
+import com.junpak.cashbook.domain.account.Account;
+
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
