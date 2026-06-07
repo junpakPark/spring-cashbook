@@ -1,6 +1,6 @@
 package com.junpak.cashbook.domain.journal;
 
-import static com.junpak.cashbook.domain.journal.Account.*;
+import static com.junpak.cashbook.domain.account.Account.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDateTime;
