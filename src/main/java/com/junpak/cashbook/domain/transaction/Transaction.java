@@ -28,8 +28,11 @@ public class Transaction {
 	private TransactionType transactionType;
 	@Enumerated(value = EnumType.STRING)
 	private PaymentMethod paymentMethod;
-	private LocalDateTime transactionDate;
+	@Enumerated(value = EnumType.STRING)
+	private TransactionStatus status;
 	private Money amount;
+	private LocalDateTime transactionDate;
+	private LocalDateTime cancelDate;
 
 	public Transaction(
 		String detail,
@@ -44,6 +47,7 @@ public class Transaction {
 		this.paymentMethod = method;
 		this.amount = Objects.requireNonNull(amount, "거래 금액은 필수입니다.");
 		this.transactionDate = Objects.requireNonNull(transactionDate, "거래일시는 필수입니다.");
+		this.status = TransactionStatus.ACTIVE;
 	}
 
 	private void validate(TransactionType type, PaymentMethod method) {
@@ -53,5 +57,12 @@ public class Transaction {
 			throw new IllegalArgumentException("해당 거래 유형에서 사용할 수 없는 결제수단입니다.");
 		}
 
+	}
+
+	public void cancel(LocalDateTime cancelDate) {
+		Objects.requireNonNull(cancelDate, "취소일시는 필수입니다.");
+		status.validateCancelable();
+		this.status = TransactionStatus.CANCELED;
+		this.cancelDate = cancelDate;
 	}
 }
