@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.http.MediaType;
 
+import com.junpak.cashbook.application.dto.request.CancelTransactionRequest;
 import com.junpak.cashbook.application.dto.request.RecordTransactionRequest;
 import com.junpak.cashbook.domain.transaction.PaymentMethod;
 import com.junpak.cashbook.domain.transaction.TransactionType;
@@ -29,6 +30,21 @@ public class TransactionSteps {
 			.contentType(MediaType.APPLICATION_JSON_VALUE)
 			.body(request)
 			.when().post("/transactions")
+			.then().log().all()
+			.extract();
+	}
+
+	public static CancelTransactionRequest 매매취소요청_생성() {
+		return new CancelTransactionRequest(
+			LocalDateTime.of(2026, 6, 8, 11, 20)
+		);
+	}
+
+	public static ExtractableResponse<Response> 매매취소요청(CancelTransactionRequest request, Long transactionId) {
+		return RestAssured.given().log().all()
+			.contentType(MediaType.APPLICATION_JSON_VALUE)
+			.body(request)
+			.when().post("/transactions/{transactionId}/cancel", transactionId)
 			.then().log().all()
 			.extract();
 	}
