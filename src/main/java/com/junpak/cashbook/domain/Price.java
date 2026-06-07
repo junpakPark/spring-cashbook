@@ -11,16 +11,23 @@ import lombok.NoArgsConstructor;
 @Getter
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Money {
+public class Price {
 
 	private BigDecimal amount;
 
-	public Money(BigDecimal amount) {
-		this.amount = Objects.requireNonNull(amount, "금액은 필수입니다.");
+	private Price(BigDecimal amount) {
+		this.amount = Objects.requireNonNull(amount, "가격은 필수입니다.");
 	}
 
-	public static Money from(int amount) {
-		return new Money(BigDecimal.valueOf(amount));
+	public static Price from(int amount) {
+		if (amount < 0) {
+			throw new IllegalArgumentException("가격은 음수가 될 수 없습니다.");
+		}
+		return new Price(BigDecimal.valueOf(amount));
+	}
+
+	public Money toMoney() {
+		return new Money(amount);
 	}
 
 	@Override
@@ -31,8 +38,8 @@ public class Money {
 		if (object == null || getClass() != object.getClass()) {
 			return false;
 		}
-		final Money money = (Money)object;
-		return Objects.equals(amount, money.amount);
+		final Price price = (Price)object;
+		return Objects.equals(amount, price.amount);
 	}
 
 	@Override
