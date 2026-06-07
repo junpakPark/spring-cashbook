@@ -1,5 +1,7 @@
 package com.junpak.cashbook.domain;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.stereotype.Component;
@@ -43,5 +45,18 @@ public class TransactionJournalizer {
 			case CARD -> Account.CARD_PAYABLE;
 			case CREDIT -> Account.PAYABLE;
 		};
+	}
+
+	public Journal cancel(List<Journal> journals, LocalDateTime cancelTime) {
+		Objects.requireNonNull(journals, "분개 목록은 필수입니다.");
+		Objects.requireNonNull(cancelTime, "취소일시는 필수입니다.");
+		if (journals.isEmpty()) {
+			throw new IllegalStateException("해당하는 분개가 없습니다.");
+		}
+		if (journals.size() > 1) {
+			throw new IllegalStateException("이미 취소 분개가 생성된 거래입니다.");
+		}
+		Journal journal = journals.getFirst();
+		return journal.cancel(cancelTime);
 	}
 }
