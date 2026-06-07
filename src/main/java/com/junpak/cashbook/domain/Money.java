@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Money {
 
+	public static final Money ZERO = new Money(BigDecimal.ZERO);
+
 	private BigDecimal amount;
 
 	public Money(BigDecimal amount) {
@@ -21,6 +23,24 @@ public class Money {
 
 	public static Money from(int amount) {
 		return new Money(BigDecimal.valueOf(amount));
+	}
+
+	public Money add(Money other) {
+		Objects.requireNonNull(other, "더할 금액은 필수입니다.");
+		return new Money(amount.add(other.amount));
+	}
+
+	public Money subtract(Money other) {
+		Objects.requireNonNull(other, "뺄 금액은 필수입니다.");
+		return new Money(amount.subtract(other.amount));
+	}
+
+	public Money negate() {
+		return new Money(amount.negate());
+	}
+
+	public boolean isZero() {
+		return amount.compareTo(BigDecimal.ZERO) == 0;
 	}
 
 	@Override
