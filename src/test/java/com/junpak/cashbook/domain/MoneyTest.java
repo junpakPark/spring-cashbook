@@ -17,10 +17,10 @@ class MoneyTest {
 	}
 
 	@Test
-	void 금액은_음수가_될_수_없다() {
-		assertThatThrownBy(() -> Money.from(-1))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("금액은 음수가 될 수 없습니다.");
+	void 금액은_음수가_될_수_있다() {
+		final Money money = Money.from(-1);
+
+		assertThat(money.getAmount()).isEqualByComparingTo(BigDecimal.valueOf(-1));
 	}
 
 	@Test
