@@ -25,6 +25,21 @@ public class TransactionSteps {
 		);
 	}
 
+	public static RecordTransactionRequest 매매기록요청_생성(
+		TransactionType type,
+		PaymentMethod method,
+		int amount,
+		LocalDateTime transactionDate
+	) {
+		return new RecordTransactionRequest(
+			"거래 내용",
+			type,
+			method,
+			amount,
+			transactionDate
+		);
+	}
+
 	public static ExtractableResponse<Response> 매매기록요청(RecordTransactionRequest request) {
 		return RestAssured.given().log().all()
 			.contentType(MediaType.APPLICATION_JSON_VALUE)
