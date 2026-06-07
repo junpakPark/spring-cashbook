@@ -34,4 +34,9 @@ public class Journal {
 		this.amount = amount;
 		this.transactionDate = Objects.requireNonNull(transactionDate, "분개일시는 필수입니다.");
 	}
+
+	public Journal cancel(LocalDateTime cancelTime) {
+		Objects.requireNonNull(cancelTime, "취소일시는 필수입니다.");
+		return new Journal(transactionId, journalAccounts.reverse(), amount, cancelTime);
+	}
 }
