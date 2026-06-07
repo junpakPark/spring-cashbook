@@ -1,6 +1,5 @@
 package com.junpak.cashbook.domain;
 
-import static com.junpak.cashbook.domain.transaction.TransactionType.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDateTime;
@@ -10,7 +9,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -40,6 +38,8 @@ class TransactionJournalizerTest {
 		"CARD, EXPENSE, EXPENSE, CARD_PAYABLE",
 		"CREDIT, EXPENSE, EXPENSE, PAYABLE",
 		"CASH, SECONDHAND_SALE, CASH, OTHER_INCOME",
+		"CASH, CARD_BILL_PAYMENT, CARD_PAYABLE, CASH",
+		"CASH, PAYABLE_REPAYMENT, PAYABLE, CASH",
 	})
 	void 거래를_분개한다(
 		final PaymentMethod method,

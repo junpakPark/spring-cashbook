@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class PaymentMethodTest {
 
 	@ParameterizedTest
-	@ValueSource(strings = {"INCOME", "EXPENSE", "SECONDHAND_SALE"})
+	@ValueSource(strings = {"INCOME", "EXPENSE", "SECONDHAND_SALE", "CARD_BILL_PAYMENT", "PAYABLE_REPAYMENT"})
 	void 현금은_모든_거래_유형에_허용된다(TransactionType type) {
 		assertThat(CASH.isAllowedFor(type)).isTrue();
 	}
@@ -24,6 +24,8 @@ class PaymentMethodTest {
 			assertThat(CARD.isAllowedFor(EXPENSE)).isTrue();
 			assertThat(CARD.isAllowedFor(INCOME)).isFalse();
 			assertThat(CARD.isAllowedFor(SECONDHAND_SALE)).isFalse();
+			assertThat(CARD.isAllowedFor(CARD_BILL_PAYMENT)).isFalse();
+			assertThat(CARD.isAllowedFor(PAYABLE_REPAYMENT)).isFalse();
 		});
 	}
 
@@ -33,6 +35,8 @@ class PaymentMethodTest {
 			assertThat(CREDIT.isAllowedFor(EXPENSE)).isTrue();
 			assertThat(CREDIT.isAllowedFor(INCOME)).isFalse();
 			assertThat(CREDIT.isAllowedFor(SECONDHAND_SALE)).isFalse();
+			assertThat(CREDIT.isAllowedFor(CARD_BILL_PAYMENT)).isFalse();
+			assertThat(CREDIT.isAllowedFor(PAYABLE_REPAYMENT)).isFalse();
 		});
 	}
 }
