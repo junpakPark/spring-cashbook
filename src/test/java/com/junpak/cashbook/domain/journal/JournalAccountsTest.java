@@ -39,4 +39,16 @@ class JournalAccountsTest {
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("차변과 대변 계정은 같을 수 없습니다.");
 	}
+
+	@Test
+	void 차변과_대변을_반대로_뒤집는다() {
+		final JournalAccounts journalAccounts = new JournalAccounts(EXPENSE, CASH);
+
+		final JournalAccounts reversed = journalAccounts.reverse();
+
+		SoftAssertions.assertSoftly(softly -> {
+			softly.assertThat(reversed.getDebit()).isEqualTo(CASH);
+			softly.assertThat(reversed.getCredit()).isEqualTo(EXPENSE);
+		});
+	}
 }

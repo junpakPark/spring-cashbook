@@ -33,4 +33,7 @@ public class JournalAccounts {
 		}
 	}
 
+	public JournalAccounts reverse() {
+		return new JournalAccounts(credit, debit);
+	}
 }
