@@ -17,6 +17,7 @@ class TransactionTest {
 	private static final String DETAIL = "거래 내용";
 	private static final Money AMOUNT = Money.from(1_000);
 	private static final LocalDateTime TRANSACTION_DATE = LocalDateTime.of(2026, 6, 7, 16, 30);
+	private static final LocalDateTime CANCEL_DATE = LocalDateTime.of(2026, 6, 8, 11, 20);
 
 	@Test
 	void 거래_유형은_필수이다() {
@@ -75,6 +76,8 @@ class TransactionTest {
 			assertThat(transaction.getPaymentMethod()).isEqualTo(method);
 			assertThat(transaction.getAmount()).isEqualTo(AMOUNT);
 			assertThat(transaction.getTransactionDate()).isEqualTo(TRANSACTION_DATE);
+			assertThat(transaction.getStatus()).isEqualTo(TransactionStatus.ACTIVE);
+			assertThat(transaction.getCancelDate()).isNull();
 		});
 
 	}
@@ -93,6 +96,41 @@ class TransactionTest {
 		assertThatThrownBy(() -> new Transaction(DETAIL, type, method, AMOUNT, TRANSACTION_DATE))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 거래 유형에서 사용할 수 없는 결제수단입니다.");
+	}
+
+	@Test
+	void 거래를_취소한다() {
+		final Transaction transaction = new Transaction(DETAIL, TransactionType.EXPENSE, PaymentMethod.CASH, AMOUNT,
+			TRANSACTION_DATE);
+
+		transaction.cancel(CANCEL_DATE);
+
+		SoftAssertions.assertSoftly(softly -> {
+			softly.assertThat(transaction.getStatus()).isEqualTo(TransactionStatus.CANCELED);
+			softly.assertThat(transaction.getCancelDate()).isEqualTo(CANCEL_DATE);
+		});
+	}
+
+	@Test
+	void 취소_일시는_필수이다() {
+		final Transaction transaction = new Transaction(DETAIL, TransactionType.EXPENSE, PaymentMethod.CASH, AMOUNT,
+			TRANSACTION_DATE);
+
+		assertThatThrownBy(() -> transaction.cancel(null))
+			.isInstanceOf(NullPointerException.class)
+			.hasMessage("취소일시는 필수입니다.");
+		assertThat(transaction.getStatus()).isEqualTo(TransactionStatus.ACTIVE);
+	}
+
+	@Test
+	void 취소된_거래는_다시_취소할_수_없다() {
+		final Transaction transaction = new Transaction(DETAIL, TransactionType.EXPENSE, PaymentMethod.CASH, AMOUNT,
+			TRANSACTION_DATE);
+		transaction.cancel(CANCEL_DATE);
+
+		assertThatThrownBy(() -> transaction.cancel(CANCEL_DATE.plusDays(1)))
+			.isInstanceOf(IllegalStateException.class)
+			.hasMessage("취소된 매매는 다시 취소할 수 없습니다.");
 	}
 
 }
