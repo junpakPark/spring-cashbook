@@ -19,7 +19,7 @@ class PaymentMethodTest {
 	}
 
 	@Test
-	void 카드는_지출과_환불에만_허용된다() {
+	void 카드는_지출에만_허용된다() {
 		SoftAssertions.assertSoftly(softly -> {
 			assertThat(CARD.isAllowedFor(EXPENSE)).isTrue();
 			assertThat(CARD.isAllowedFor(INCOME)).isFalse();
