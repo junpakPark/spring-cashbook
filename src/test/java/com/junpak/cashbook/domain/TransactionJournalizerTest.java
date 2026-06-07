@@ -50,6 +50,7 @@ class TransactionJournalizerTest {
 			softly.assertThat(journal.getAmount()).isEqualTo(AMOUNT);
 			softly.assertThat(journal.getJournalAccounts().getDebit()).isEqualTo(expectedDebit);
 			softly.assertThat(journal.getJournalAccounts().getCredit()).isEqualTo(expectedCredit);
+			softly.assertThat(journal.getTransactionDate()).isEqualTo(TRANSACTION_DATE);
 		});
 	}
 
