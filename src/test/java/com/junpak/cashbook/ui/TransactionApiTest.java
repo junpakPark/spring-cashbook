@@ -20,4 +20,15 @@ class TransactionApiTest extends ApiTest {
 		});
 	}
 
+	@Test
+	void 매매_취소() {
+		TransactionSteps.매매기록요청(TransactionSteps.매매기록요청_생성()).header("Location");
+		final Long transactionId = 1L;
+
+		final var request = TransactionSteps.매매취소요청_생성();
+		final var response = TransactionSteps.매매취소요청(request, transactionId);
+
+		assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+	}
+
 }
