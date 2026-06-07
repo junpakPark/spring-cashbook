@@ -18,10 +18,14 @@ public class TransactionJournalizer {
 	}
 
 	public Journal journalize(final Transaction transaction) {
-		JournalAccounts journalAccounts = resolveJournalAccounts(transaction.getTransactionType(),
-			resolveMethodAccount(transaction.getPaymentMethod()));
+		Account methodAccount = resolveMethodAccount(transaction.getPaymentMethod());
+		JournalAccounts journalAccounts = resolveJournalAccounts(transaction.getTransactionType(), methodAccount);
 
-		return new Journal(transaction.getId(), journalAccounts, transaction.getAmount());
+		return new Journal(
+			transaction.getId(),
+			journalAccounts,
+			transaction.getAmount()
+		);
 	}
 
 	private JournalAccounts resolveJournalAccounts(TransactionType type, Account methodAccount) {
@@ -29,7 +33,6 @@ public class TransactionJournalizer {
 			case INCOME -> new JournalAccounts(methodAccount, Account.INCOME);
 			case SECONDHAND_SALE -> new JournalAccounts(methodAccount, Account.OTHER_INCOME);
 			case EXPENSE -> new JournalAccounts(Account.EXPENSE, methodAccount);
-			case REFUND -> throw new UnsupportedOperationException("환불 기능은 아직 구현되지 않았습니다.");
 		};
 	}
 

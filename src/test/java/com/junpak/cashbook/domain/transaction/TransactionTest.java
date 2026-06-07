@@ -60,9 +60,7 @@ class TransactionTest {
 		"CASH, INCOME",
 		"CASH, EXPENSE",
 		"CASH, SECONDHAND_SALE",
-		"CASH, REFUND",
 		"CARD, EXPENSE",
-		"CARD, REFUND",
 		"CREDIT, EXPENSE",
 	})
 	void 허용된_결제수단이면_거래를_생성한다(
@@ -87,7 +85,6 @@ class TransactionTest {
 		"CARD, SECONDHAND_SALE",
 		"CREDIT, INCOME",
 		"CREDIT, SECONDHAND_SALE",
-		"CREDIT, REFUND",
 	})
 	void 허용되지_않는_결제수단이면_거래를_생성할_수_없다(
 		final PaymentMethod method,

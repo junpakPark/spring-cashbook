@@ -53,14 +53,4 @@ class TransactionJournalizerTest {
 		});
 	}
 
-	@ParameterizedTest
-	@ValueSource(strings = {"CASH", "CARD"})
-	void 환불은_아직_분개할_수_없다(final PaymentMethod method) {
-		final Transaction transaction = new Transaction(DETAIL, REFUND, method, AMOUNT, TRANSACTION_DATE);
-
-		assertThatThrownBy(() -> sut.journalize(transaction))
-			.isInstanceOf(UnsupportedOperationException.class)
-			.hasMessage("환불 기능은 아직 구현되지 않았습니다.");
-	}
-
 }
