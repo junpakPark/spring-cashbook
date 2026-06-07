@@ -1,6 +1,7 @@
 package com.junpak.cashbook.domain.transaction;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import com.junpak.cashbook.domain.Money;
 
@@ -32,15 +33,25 @@ public class Transaction {
 
 	public Transaction(
 		String detail,
-		TransactionType transactionType,
-		PaymentMethod paymentMethod,
+		TransactionType type,
+		PaymentMethod method,
 		Money amount,
 		LocalDateTime transactionDate
 	) {
-		this.detail = detail;
-		this.transactionType = transactionType;
-		this.paymentMethod = paymentMethod;
-		this.amount = amount;
-		this.transactionDate = transactionDate;
+		validate(type, method);
+		this.detail = Objects.requireNonNull(detail, "거래 내용은 필수입니다.");
+		this.transactionType = type;
+		this.paymentMethod = method;
+		this.amount = Objects.requireNonNull(amount, "거래 금액은 필수입니다.");;
+		this.transactionDate = Objects.requireNonNull(transactionDate, "거래일시는 필수입니다.");
+	}
+
+	private void validate(TransactionType type, PaymentMethod method) {
+		Objects.requireNonNull(type, "거래 유형은 필수입니다.");
+		Objects.requireNonNull(method, "결제 수단은 필수입니다.");
+		if (!method.isAllowedFor(type)) {
+			throw new IllegalArgumentException("해당 거래 유형에서 사용할 수 없는 결제수단입니다.");
+		}
+
 	}
 }

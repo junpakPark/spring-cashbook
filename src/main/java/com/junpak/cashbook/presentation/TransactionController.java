@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.junpak.cashbook.application.TransactionService;
 import com.junpak.cashbook.application.dto.request.RecordTransactionRequest;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -22,7 +24,7 @@ public class TransactionController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> recordTransaction(@RequestBody RecordTransactionRequest request) {
+	public ResponseEntity<Void> recordTransaction(@Valid @RequestBody RecordTransactionRequest request) {
 		final Long transactionId = transactionService.recordTransaction(request);
 
 		return ResponseEntity.created(URI.create("/transactions/" + transactionId)).build();
