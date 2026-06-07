@@ -36,6 +36,8 @@ public class TransactionJournalizer {
 			case INCOME -> new JournalAccounts(methodAccount, Account.INCOME);
 			case SECONDHAND_SALE -> new JournalAccounts(methodAccount, Account.OTHER_INCOME);
 			case EXPENSE -> new JournalAccounts(Account.EXPENSE, methodAccount);
+			case CARD_BILL_PAYMENT -> new JournalAccounts(Account.CARD_PAYABLE, Account.CASH);
+			case PAYABLE_REPAYMENT -> new JournalAccounts(Account.PAYABLE, Account.CASH);
 		};
 	}
 

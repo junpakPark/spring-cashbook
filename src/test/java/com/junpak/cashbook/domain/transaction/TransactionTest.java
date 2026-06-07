@@ -61,6 +61,8 @@ class TransactionTest {
 		"CASH, INCOME",
 		"CASH, EXPENSE",
 		"CASH, SECONDHAND_SALE",
+		"CASH, CARD_BILL_PAYMENT",
+		"CASH, PAYABLE_REPAYMENT",
 		"CARD, EXPENSE",
 		"CREDIT, EXPENSE",
 	})
@@ -86,8 +88,12 @@ class TransactionTest {
 	@CsvSource({
 		"CARD, INCOME",
 		"CARD, SECONDHAND_SALE",
+		"CARD, CARD_BILL_PAYMENT",
+		"CARD, PAYABLE_REPAYMENT",
 		"CREDIT, INCOME",
 		"CREDIT, SECONDHAND_SALE",
+		"CREDIT, CARD_BILL_PAYMENT",
+		"CREDIT, PAYABLE_REPAYMENT",
 	})
 	void 허용되지_않는_결제수단이면_거래를_생성할_수_없다(
 		final PaymentMethod method,
