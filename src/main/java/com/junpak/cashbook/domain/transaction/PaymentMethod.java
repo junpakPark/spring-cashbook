@@ -14,4 +14,14 @@ public enum PaymentMethod {
 	PaymentMethod(String description) {
 		this.description = description;
 	}
+
+	public boolean isAllowedFor(final TransactionType type) {
+		if (this == CREDIT) {
+			return type == TransactionType.EXPENSE;
+		}
+		if (this == CARD) {
+			return type == TransactionType.EXPENSE || type == TransactionType.REFUND;
+		}
+		return true;
+	}
 }
