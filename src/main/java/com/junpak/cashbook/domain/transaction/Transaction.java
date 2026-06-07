@@ -42,7 +42,7 @@ public class Transaction {
 		this.detail = Objects.requireNonNull(detail, "거래 내용은 필수입니다.");
 		this.transactionType = type;
 		this.paymentMethod = method;
-		this.amount = Objects.requireNonNull(amount, "거래 금액은 필수입니다.");;
+		this.amount = Objects.requireNonNull(amount, "거래 금액은 필수입니다.");
 		this.transactionDate = Objects.requireNonNull(transactionDate, "거래일시는 필수입니다.");
 	}
 

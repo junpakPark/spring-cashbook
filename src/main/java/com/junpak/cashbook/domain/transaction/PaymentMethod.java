@@ -16,12 +16,9 @@ public enum PaymentMethod {
 	}
 
 	public boolean isAllowedFor(final TransactionType type) {
-		if (this == CREDIT) {
-			return type == TransactionType.EXPENSE;
+		if (this == CASH) {
+			return true;
 		}
-		if (this == CARD) {
-			return type == TransactionType.EXPENSE || type == TransactionType.REFUND;
-		}
-		return true;
+		return type == TransactionType.EXPENSE;
 	}
 }

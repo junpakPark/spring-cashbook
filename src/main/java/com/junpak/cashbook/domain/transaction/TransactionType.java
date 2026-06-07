@@ -7,7 +7,6 @@ public enum TransactionType {
 	INCOME("수입"),
 	EXPENSE("지출"),
 	SECONDHAND_SALE("중고 판매"),
-	REFUND("환불"),
 	;
 
 	private final String description;
