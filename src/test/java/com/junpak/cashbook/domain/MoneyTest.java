@@ -39,4 +39,39 @@ class MoneyTest {
 
 		assertThat(money).isNotEqualTo(other);
 	}
+
+	@Test
+	void 금액을_더할_수_있다() {
+		final Money money = Money.from(1_000);
+		final Money other = Money.from(2_000);
+
+		final Money result = money.add(other);
+
+		assertThat(result.getAmount()).isEqualByComparingTo(BigDecimal.valueOf(3_000));
+	}
+
+	@Test
+	void 금액을_뺄_수_있다() {
+		final Money money = Money.from(1_000);
+		final Money other = Money.from(2_000);
+
+		final Money result = money.subtract(other);
+
+		assertThat(result.getAmount()).isEqualByComparingTo(BigDecimal.valueOf(-1_000));
+	}
+
+	@Test
+	void 금액의_부호를_뒤집을_수_있다() {
+		final Money money = Money.from(1_000);
+
+		final Money result = money.negate();
+
+		assertThat(result.getAmount()).isEqualByComparingTo(BigDecimal.valueOf(-1_000));
+	}
+
+	@Test
+	void 금액이_0원인지_확인한다() {
+		assertThat(Money.ZERO.isZero()).isTrue();
+		assertThat(Money.from(1).isZero()).isFalse();
+	}
 }
