@@ -3,7 +3,7 @@ package com.junpak.cashbook.domain.transaction;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import com.junpak.cashbook.domain.Money;
+import com.junpak.cashbook.domain.Price;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -30,7 +30,7 @@ public class Transaction {
 	private PaymentMethod paymentMethod;
 	@Enumerated(value = EnumType.STRING)
 	private TransactionStatus status;
-	private Money amount;
+	private Price amount;
 	private LocalDateTime transactionDate;
 	private LocalDateTime cancelDate;
 
@@ -38,7 +38,7 @@ public class Transaction {
 		String detail,
 		TransactionType type,
 		PaymentMethod method,
-		Money amount,
+		Price amount,
 		LocalDateTime transactionDate
 	) {
 		validate(type, method);

@@ -24,7 +24,8 @@ import com.junpak.cashbook.domain.transaction.TransactionType;
 class TransactionJournalizerTest {
 
 	private static final String DETAIL = "거래 내용";
-	private static final Money AMOUNT = Money.from(1_000);
+	private static final Price AMOUNT = Price.from(1_000);
+	private static final Money JOURNAL_AMOUNT = Money.from(1_000);
 	private static final LocalDateTime TRANSACTION_DATE = LocalDateTime.of(2026, 6, 7, 16, 30);
 	private static final LocalDateTime CANCEL_DATE = LocalDateTime.of(2026, 6, 8, 11, 20);
 
@@ -51,7 +52,7 @@ class TransactionJournalizerTest {
 		final Journal journal = sut.journalize(transaction);
 
 		SoftAssertions.assertSoftly(softly -> {
-			softly.assertThat(journal.getAmount()).isEqualTo(AMOUNT);
+			softly.assertThat(journal.getAmount()).isEqualTo(JOURNAL_AMOUNT);
 			softly.assertThat(journal.getJournalAccounts().getDebit()).isEqualTo(expectedDebit);
 			softly.assertThat(journal.getJournalAccounts().getCredit()).isEqualTo(expectedCredit);
 			softly.assertThat(journal.getTransactionDate()).isEqualTo(TRANSACTION_DATE);
@@ -60,14 +61,14 @@ class TransactionJournalizerTest {
 
 	@Test
 	void 취소_분개를_생성한다() {
-		final Journal journal = new Journal(1L, new JournalAccounts(Account.EXPENSE, Account.CASH), AMOUNT,
+		final Journal journal = new Journal(1L, new JournalAccounts(Account.EXPENSE, Account.CASH), JOURNAL_AMOUNT,
 			TRANSACTION_DATE);
 
 		final Journal canceledJournal = sut.cancel(List.of(journal), CANCEL_DATE);
 
 		SoftAssertions.assertSoftly(softly -> {
 			softly.assertThat(canceledJournal.getTransactionId()).isEqualTo(1L);
-			softly.assertThat(canceledJournal.getAmount()).isEqualTo(AMOUNT);
+			softly.assertThat(canceledJournal.getAmount()).isEqualTo(JOURNAL_AMOUNT);
 			softly.assertThat(canceledJournal.getTransactionDate()).isEqualTo(CANCEL_DATE);
 			softly.assertThat(canceledJournal.getJournalAccounts().getDebit()).isEqualTo(Account.CASH);
 			softly.assertThat(canceledJournal.getJournalAccounts().getCredit()).isEqualTo(Account.EXPENSE);
@@ -83,7 +84,7 @@ class TransactionJournalizerTest {
 
 	@Test
 	void 취소_일시는_필수이다() {
-		final Journal journal = new Journal(1L, new JournalAccounts(Account.EXPENSE, Account.CASH), AMOUNT,
+		final Journal journal = new Journal(1L, new JournalAccounts(Account.EXPENSE, Account.CASH), JOURNAL_AMOUNT,
 			TRANSACTION_DATE);
 
 		assertThatThrownBy(() -> sut.cancel(List.of(journal), null))
@@ -100,7 +101,7 @@ class TransactionJournalizerTest {
 
 	@Test
 	void 이미_취소_분개가_생성된_거래는_취소할_수_없다() {
-		final Journal journal = new Journal(1L, new JournalAccounts(Account.EXPENSE, Account.CASH), AMOUNT,
+		final Journal journal = new Journal(1L, new JournalAccounts(Account.EXPENSE, Account.CASH), JOURNAL_AMOUNT,
 			TRANSACTION_DATE);
 		final Journal canceledJournal = journal.cancel(CANCEL_DATE);
 

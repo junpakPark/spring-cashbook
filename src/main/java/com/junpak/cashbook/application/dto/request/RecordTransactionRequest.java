@@ -2,7 +2,7 @@ package com.junpak.cashbook.application.dto.request;
 
 import java.time.LocalDateTime;
 
-import com.junpak.cashbook.domain.Money;
+import com.junpak.cashbook.domain.Price;
 import com.junpak.cashbook.domain.transaction.PaymentMethod;
 import com.junpak.cashbook.domain.transaction.Transaction;
 import com.junpak.cashbook.domain.transaction.TransactionType;
@@ -25,6 +25,6 @@ public record RecordTransactionRequest(
 ) {
 
 	public Transaction toTransaction() {
-		return new Transaction(detail, transactionType, paymentMethod, Money.from(amount), transactionDate);
+		return new Transaction(detail, transactionType, paymentMethod, Price.from(amount), transactionDate);
 	}
 }
