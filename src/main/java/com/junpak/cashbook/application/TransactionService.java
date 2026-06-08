@@ -23,10 +23,14 @@ public class TransactionService {
 	private final TransactionRepository transactionRepository;
 	private final JournalRepository journalRepository;
 	private final TransactionJournalizer journalizer;
+	private final FinancialPositionValidator validator;
 
 	public Long recordTransaction(RecordTransactionRequest request) {
 		Transaction transaction = transactionRepository.save(request.toTransaction());
-		journalRepository.save(journalizer.journalize(transaction));
+
+		Journal journal = journalizer.journalize(transaction);
+		validator.validate(journal);
+		journalRepository.save(journal);
 
 		return transaction.getId();
 	}
