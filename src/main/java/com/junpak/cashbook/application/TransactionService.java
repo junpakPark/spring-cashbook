@@ -13,23 +13,16 @@ import com.junpak.cashbook.domain.journal.JournalRepository;
 import com.junpak.cashbook.domain.transaction.Transaction;
 import com.junpak.cashbook.domain.transaction.TransactionRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class TransactionService {
 
 	private final TransactionRepository transactionRepository;
 	private final JournalRepository journalRepository;
 	private final TransactionJournalizer journalizer;
-
-	public TransactionService(
-		TransactionRepository transactionRepository,
-		JournalRepository journalRepository,
-		TransactionJournalizer journalizer
-	) {
-		this.transactionRepository = transactionRepository;
-		this.journalRepository = journalRepository;
-		this.journalizer = journalizer;
-	}
 
 	public Long recordTransaction(RecordTransactionRequest request) {
 		Transaction transaction = transactionRepository.save(request.toTransaction());

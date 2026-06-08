@@ -16,9 +16,6 @@ import com.junpak.cashbook.domain.transaction.TransactionType;
 @Component
 public class TransactionJournalizer {
 
-	private TransactionJournalizer() {
-	}
-
 	public Journal journalize(final Transaction transaction) {
 		Account methodAccount = resolveMethodAccount(transaction.getPaymentMethod());
 		JournalAccounts journalAccounts = resolveJournalAccounts(transaction.getTransactionType(), methodAccount);

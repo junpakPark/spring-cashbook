@@ -21,15 +21,14 @@ import com.junpak.cashbook.domain.journal.Journal;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class QueryDslFinancialReportReader implements FinancialReportReader {
 
 	private final JPAQueryFactory queryFactory;
-
-	public QueryDslFinancialReportReader(JPAQueryFactory queryFactory) {
-		this.queryFactory = queryFactory;
-	}
 
 	@Override
 	public FinancialPositionResponse getFinancialPosition(FinancialReportCondition condition) {
