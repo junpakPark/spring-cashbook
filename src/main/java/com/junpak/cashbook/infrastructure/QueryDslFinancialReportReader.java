@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.junpak.cashbook.application.FinancialReportReader;
 import com.junpak.cashbook.application.dto.request.FinancialReportCondition;
-import com.junpak.cashbook.application.dto.response.FinancialPositionResponse;
 import com.junpak.cashbook.application.dto.response.ProfitAndLossResponse;
 import com.junpak.cashbook.application.dto.response.TrialBalanceAccountResponse;
 import com.junpak.cashbook.application.dto.response.TrialBalanceResponse;
+import com.junpak.cashbook.domain.FinancialPosition;
 import com.junpak.cashbook.domain.account.Account;
 import com.junpak.cashbook.domain.journal.Journal;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -31,16 +31,12 @@ public class QueryDslFinancialReportReader implements FinancialReportReader {
 	private final JPAQueryFactory queryFactory;
 
 	@Override
-	public FinancialPositionResponse getFinancialPosition(FinancialReportCondition condition) {
+	public FinancialPosition getFinancialPosition(FinancialReportCondition condition) {
 		final List<Journal> journals = queryFactory.selectFrom(journal)
 			.where(until(condition))
 			.fetch();
 
-		return FinancialPositionResponse.of(
-			Account.CASH.sumNetChangeAmount(journals),
-			Account.CARD_PAYABLE.sumNetChangeAmount(journals),
-			Account.PAYABLE.sumNetChangeAmount(journals)
-		);
+		return FinancialPosition.from(journals);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package com.junpak.cashbook.application.dto.response;
 
-import com.junpak.cashbook.domain.Money;
+import com.junpak.cashbook.domain.FinancialPosition;
 
 public record FinancialPositionResponse(
 	int cash,
@@ -8,11 +8,11 @@ public record FinancialPositionResponse(
 	int payable
 ) {
 
-	public static FinancialPositionResponse of(Money cash, Money cardPayable, Money payable) {
+	public static FinancialPositionResponse from(FinancialPosition financialPosition) {
 		return new FinancialPositionResponse(
-			cash.getAmount().intValue(),
-			cardPayable.getAmount().intValue(),
-			payable.getAmount().intValue()
+			financialPosition.cash().getAmount().intValue(),
+			financialPosition.cardPayable().getAmount().intValue(),
+			financialPosition.payable().getAmount().intValue()
 		);
 	}
 }
