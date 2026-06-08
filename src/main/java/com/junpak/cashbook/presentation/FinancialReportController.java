@@ -9,14 +9,13 @@ import com.junpak.cashbook.application.dto.response.FinancialPositionResponse;
 import com.junpak.cashbook.application.dto.response.ProfitAndLossResponse;
 import com.junpak.cashbook.application.dto.response.TrialBalanceResponse;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class FinancialReportController {
 
 	private final FinancialReportReader financialReportReader;
-
-	public FinancialReportController(FinancialReportReader financialReportReader) {
-		this.financialReportReader = financialReportReader;
-	}
 
 	@GetMapping("/financial-position")
 	public FinancialPositionResponse getFinancialPosition(FinancialReportCondition condition) {

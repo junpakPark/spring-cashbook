@@ -14,16 +14,14 @@ import com.junpak.cashbook.application.dto.request.CancelTransactionRequest;
 import com.junpak.cashbook.application.dto.request.RecordTransactionRequest;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/transactions")
 public class TransactionController {
 
 	private final TransactionService transactionService;
-
-	public TransactionController(TransactionService transactionService) {
-		this.transactionService = transactionService;
-	}
 
 	@PostMapping
 	public ResponseEntity<Void> recordTransaction(@Valid @RequestBody RecordTransactionRequest request) {
