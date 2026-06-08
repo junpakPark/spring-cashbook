@@ -74,4 +74,11 @@ class MoneyTest {
 		assertThat(Money.ZERO.isZero()).isTrue();
 		assertThat(Money.from(1).isZero()).isFalse();
 	}
+
+	@Test
+	void 금액이_음수인지_확인한다() {
+		assertThat(Money.from(-1).isNegative()).isTrue();
+		assertThat(Money.ZERO.isNegative()).isFalse();
+		assertThat(Money.from(1).isNegative()).isFalse();
+	}
 }
