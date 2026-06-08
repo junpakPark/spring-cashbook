@@ -1,5 +1,6 @@
 package com.junpak.cashbook.presentation;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,17 +19,17 @@ public class FinancialReportController {
 	private final FinancialReportReader financialReportReader;
 
 	@GetMapping("/financial-position")
-	public FinancialPositionResponse getFinancialPosition(FinancialReportCondition condition) {
-		return financialReportReader.getFinancialPosition(condition);
+	public ResponseEntity<FinancialPositionResponse> getFinancialPosition(FinancialReportCondition condition) {
+		return ResponseEntity.ok(financialReportReader.getFinancialPosition(condition));
 	}
 
 	@GetMapping("/profits-and-losses")
-	public ProfitAndLossResponse getProfitsAndLosses(FinancialReportCondition condition) {
-		return financialReportReader.getProfitsAndLosses(condition);
+	public ResponseEntity<ProfitAndLossResponse> getProfitsAndLosses(FinancialReportCondition condition) {
+		return ResponseEntity.ok(financialReportReader.getProfitsAndLosses(condition));
 	}
 
 	@GetMapping("/trial-balance")
-	public TrialBalanceResponse getTrialBalance(FinancialReportCondition condition) {
-		return financialReportReader.getTrialBalance(condition);
+	public ResponseEntity<TrialBalanceResponse> getTrialBalance(FinancialReportCondition condition) {
+		return ResponseEntity.ok(financialReportReader.getTrialBalance(condition));
 	}
 }
