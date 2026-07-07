@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.junpak.cashbook.application.TransactionService;
+import com.junpak.cashbook.application.TransactionCanceler;
+import com.junpak.cashbook.application.TransactionRecorder;
 import com.junpak.cashbook.application.dto.request.CancelTransactionRequest;
 import com.junpak.cashbook.application.dto.request.RecordTransactionRequest;
 
@@ -21,11 +22,12 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/transactions")
 public class TransactionController {
 
-	private final TransactionService transactionService;
+	private final TransactionRecorder transactionRecorder;
+	private final TransactionCanceler transactionCanceler;
 
 	@PostMapping
 	public ResponseEntity<Void> recordTransaction(@Valid @RequestBody RecordTransactionRequest request) {
-		final Long transactionId = transactionService.recordTransaction(request);
+		final Long transactionId = transactionRecorder.record(request);
 
 		return ResponseEntity.created(URI.create("/transactions/" + transactionId)).build();
 	}
@@ -35,7 +37,7 @@ public class TransactionController {
 		@PathVariable Long transactionId,
 		@Valid @RequestBody CancelTransactionRequest request
 	) {
-		transactionService.cancelTransaction(transactionId, request);
+		transactionCanceler.cancel(transactionId, request);
 
 		return ResponseEntity.noContent().build();
 	}
